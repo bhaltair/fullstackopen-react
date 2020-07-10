@@ -147,6 +147,9 @@
     - test coverage
   - e2e test(Test the system as a whole)
 - part 6 use redux state management
+  - redux flow
+  - reducer must be immutable
+    - use array concat( do not use [].push() )
 - part 7 react-router / costom hook / style
 - part 8 GrahphQL
 - part 9 TypeScript
