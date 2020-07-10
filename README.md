@@ -87,6 +87,10 @@
   - user
   - auth
     - [token](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works)
+    - http code 401 unauthorized
+    - http Authorization header
+      - Bearer schema
+    - express-jwt
     - jsonwebtoken
       ```js
       const bcrypt = require('bcrypt')
@@ -121,7 +125,27 @@
 
       module.exports = loginRouter
       ```
+    - HTTPS
 - part 5 test react app
+  - frontend login
+    - use async-awiat replace promises
+    - add token to HTTP Headers
+    - saving the token to localStorage
+  - props.children & proptypes
+    - props.children is an array（ No explicit declaration required ）
+    - references to components with ref
+      - **forwardRef** The function to create the component is wrapped in the forwardRef function call. In this way, you can access the reference assigned to it.
+      - **useImperativeHandle** The component uses useImperativeHandle Hook to access toggleVisibility functions by external components
+    - install prop-types to dependencies(or use TypeScript interface)
+  - test
+    - jest-dom
+    - react-testing-library
+    - debugging tests
+      - component.debug()
+    - Clicking buttons in tests
+      - fireEvent
+    - test coverage
+  - e2e test(Test the system as a whole)
 - part 6 use redux state management
 - part 7 react-router / costom hook / style
 - part 8 GrahphQL
@@ -134,3 +158,5 @@
 - [react official docs](https://reactjs.org/docs/hello-world.html)
 - [functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84)
 - [You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+- [Headers/Authorization](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization)
+- [react-testing-library](https://github.com/testing-library/react-testing-library)
