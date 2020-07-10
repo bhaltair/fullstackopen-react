@@ -1,68 +1,136 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+- part1 react basic
+  - props deconstruction
+  - Changes in state cause rerendering
+  - event handler muse be a funciton
+    - use high order function return event handler
+  - state
+    - The status cannot be modified directly
+    - handing arrays
+      - do not use array.push
+      - use [].concat() (not modified original array)
+    - debugger
+      - console.log()
+      - debugger breakpoint
+      - [React developer tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
+    - Rules of Hooks
+      - do not use Hooks Conditional 
+      - use Hooks in top scope(it based in linked list)
+      ```js
+        const App = (props) => {
+          // these are ok
+          const [age, setAge] = useState(0)
+          const [name, setName] = useState('Juha Tauriainen')
 
-In the project directory, you can run:
+          if ( age > 10 ) {
+            // this does not work!
+            const [foobar, setFoobar] = useState(null)
+          }
 
-### `yarn start`
+          for ( let i = 0; i < age; i++ ) {
+            // also this is not good
+            const [rightWay, setRightWay] = useState(false)
+          }
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+          const notGood = () => {
+            // and this is also illegal
+            const [x, setX] = useState(-1000)
+          }
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+          return (
+            //...
+          )
+        }
+      ```
+    - Do Not Define Components Within Components
 
-### `yarn test`
+- part 2 communicate with the server
+  - Anti-pattern: array indexes as keys
+  - Sending Data to the Server
+  - Extracting communication with the backend into a separate module
+- part 3 use node.js & express.js write server code
+  - node.js & express
+    - nodemon
+    - Semantic versioning
+    - REST
+      - Visual Studio Code REST client
+      - Postman
+    - deploy
+      - Heroku
+      - serving static files
+      - CORS
+    - Receiving data  
+      - json-parser
+  - save your data to MongoDB
+    - Debugging Node applications
+    - Schema
+      - mongoose
+    - [mongodb Atlas](https://www.mongodb.com/cloud/Atlas)
+    - middleware
+    - eslint
+- part 4 test express app
+  - project structure
+    - utils
+    - controllers
+  - test
+    - cross-env
+    - supertest 
+    - jest
+    - expect
+    - error-handing
+      - try-catch
+        - express-async-errors
+    - async-await
+    - parallel
+      - await Promise.all()
+      - for-of
+  - user
+  - auth
+    - [token](https://scotch.io/tutorials/the-ins-and-outs-of-token-based-authentication#toc-how-token-based-works)
+    - jsonwebtoken
+      ```js
+      const bcrypt = require('bcrypt')
+      const loginRouter = require('express').Router()
+      const User = require('../models/user')
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+      loginRouter.post('/', async (request, response) => {
+        const body = request.body
 
-### `yarn build`
+        const user = await User.findOne({ username: body.username })
+        const passwordCorrect = user === null
+          ? false
+          : await bcrypt.compare(body.password, user.passwordHash)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+        if (!(user && passwordCorrect)) {
+          return response.status(401).json({
+            error: 'invalid username or password'
+          })
+        }
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+        const userForToken = {
+          username: user.username,
+          id: user._id,
+        }
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+        const token = jwt.sign(userForToken, process.env.SECRET)
 
-### `yarn eject`
+        response
+          .status(200)
+          .send({ token, username: user.username, name: user.name })
+      })
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+      module.exports = loginRouter
+      ```
+- part 5 test react app
+- part 6 use redux state management
+- part 7 react-router / costom hook / style
+- part 8 GrahphQL
+- part 9 TypeScript
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## reference
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- [fullstackopen](https://fullstackopen.com/)
+- [A re-introduction to JavaScript (JS tutorial)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript)
+- [react official docs](https://reactjs.org/docs/hello-world.html)
+- [functional Programming in JavaScript](https://www.youtube.com/playlist?list=PL0zVEGEvSaeEd9hlmCXrk5yUyqUag-n84)
+- [You-Dont-Know-JS](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
