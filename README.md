@@ -150,7 +150,14 @@
   - redux flow
   - reducer must be immutable
     - use array concat( do not use [].push() )
+    - add deep-freeze Dependence(check our reducer should be pure function)
+  - use useSelector & useDispatch [ in old project, we use connect()]
 - part 7 react-router / costom hook / style
+  - react-router
+  - custom hooks
+  - css
+  - webpack
+  - class component
 - part 8 GrahphQL
 - part 9 TypeScript
 

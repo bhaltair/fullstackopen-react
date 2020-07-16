@@ -1,14 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleImportanceOf } from '../reducers/noteReducer'
-
-const Note = ({ note, handleClick }) => {
-  return(
-    <li onClick={handleClick}>
-      {note.content} <strong>{note.important ? 'important' : ''}</strong>
-    </li>
-  )
-}
+import Note from './Note'
+// const Note = ({ note, handleClick }) => {
+//   return(
+//     <li onClick={handleClick}>
+//       {note.content} <strong>{note.important ? 'important' : ''}</strong>
+//     </li>
+//   )
+// }
 
 const Notes = () => {
   const dispatch = useDispatch()

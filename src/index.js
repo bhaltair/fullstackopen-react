@@ -3,11 +3,16 @@ import ReactDOM from 'react-dom';
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import {
+  BrowserRouter as Router
+} from 'react-router-dom'
+
 import './index.css';
 import App from './App.reducer';
 import * as serviceWorker from './serviceWorker';
-import noteReducer, { createNote } from './reducers/noteReducer'
-import filterReducer, { filterChange } from './reducers/filterReducer'
+import noteReducer from './reducers/noteReducer'
+import filterReducer from './reducers/filterReducer'
+// import noteService from './services/notes'
 
 const reducer = combineReducers({
   notes: noteReducer,
@@ -15,8 +20,12 @@ const reducer = combineReducers({
 })
 const store = createStore(reducer, composeWithDevTools())
 
-store.dispatch(filterChange('IMPORTANT'))
-store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
+// noteService.getAll().then(notes =>
+//   store.dispatch(initializeNotes(notes))
+// )
+
+// store.dispatch(filterChange('IMPORTANT'))
+// store.dispatch(createNote('combineReducers forms one reducer from many simple reducers'))
 
 
 console.log(store.getState())
@@ -25,7 +34,9 @@ const renderApp = () => {
   ReactDOM.render(
     <React.StrictMode>
       <Provider store={store}>
-        <App />
+        <Router>
+          <App />
+        </Router>
       </Provider>
     </React.StrictMode>,
     document.getElementById('root')
